@@ -9,11 +9,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
     <>
-        <Online>
+        {/* <Online> */}
             <App />
-        </Online>
-        <Offline>
+        {/* </Online> */}
+        {/* <Offline>
             <Alert type="error" message="No internet connection :c"/>
-        </Offline>
+        </Offline> */}
     </>
 );
