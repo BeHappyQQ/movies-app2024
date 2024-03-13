@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import React, {  Component } from "react";
 import { format, parseISO } from "date-fns"
 import { enUS } from "date-fns/locale"
 import PosterLoader from "./poster-loader";
+import { Rate } from "antd";
 
 function fixOverview(overview) {
+    if (!overview) return "";
     const maxLength = 210;
     if (overview.length <= maxLength) {
         return overview;
@@ -32,7 +34,7 @@ export default class Movie extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageLoaded: false
+            imageLoaded: false,
         }
     }
 
@@ -40,35 +42,70 @@ export default class Movie extends Component {
         this.setState({ imageLoaded: true })
     }
 
+    handleRateChange = (value) => {
+        const { id } = this.props;
+        this.props.onMovieRate(id, value);
+    }
+
 
     render() {
         
-        const { title, release_date, overview, poster_path } = this.props
+        const { title, release_date, overview, poster_path, vote_average, moviesRatings, id, genre_ids, genreData } = this.props
         const { imageLoaded } = this.state
 
         const fixedOverview = fixOverview(overview);
         const formattedReleaseDate = formatDate(release_date);
+        
+        const getBorderColor = () => {
+            if (vote_average < 3) {
+              return '#E90000'
+            }
+            if (vote_average >= 3 && vote_average < 5) {
+              return '#E97E00'
+            }
+            if (vote_average >= 5 && vote_average < 7) {
+              return '#E9D100'
+            }
+            return '#66E900'
+          }
+
+        const getRating = () => {
+            return moviesRatings[id] || 0;
+        };
+
+        const getGenresByIds = (genreIds) => {
+            const selectedGenres = genreData.genres.filter((genre) => genreIds.includes(genre.id));
+            return selectedGenres.map((genre) => <div key={genre.id}>{genre.name}</div>)
+        }
+
 
         return(
-            <li className="movie">
-                <div className="movie-poster">
-                  {!imageLoaded && <PosterLoader />}
-                    <img
-                        alt={title}
-                        src={`https://image.tmdb.org/t/p/original${poster_path}`}
-                        onLoad={this.handleImageLoaded}
-                        style={{ display: imageLoaded ? "block" : "none" }}
-                    />
-                </div>
-                <div className="movie-details">
-                    <h2 className="movie-title">{title}</h2>
-                    <p className="movie-release-date">{formattedReleaseDate}</p>
-                    <p className="movie-genres">Драма, спорт</p>
-                    <p className="movie-description">{fixedOverview}</p>
-                </div>
-            </li>
-
-            
+                <li className="movie">
+                    <div className="movie-poster">
+                    {!imageLoaded && <PosterLoader />}
+                        <img
+                            alt={title}
+                            src={`https://image.tmdb.org/t/p/original${poster_path}`}
+                            onLoad={this.handleImageLoaded}
+                            style={{ display: imageLoaded ? "block" : "none" }}
+                        />
+                    </div>
+                    <div className="movie-details">
+                        <h2 className="movie-title">{title}</h2>
+                        <div className="movie-rating" 
+                            style={{ borderColor: getBorderColor() }}>
+                            {vote_average ? vote_average.toFixed(1) : "N/A"}
+                            </div>
+                        <p className="movie-release-date">{formattedReleaseDate}</p>
+                        <div className="movie-genre">{ getGenresByIds(genre_ids) }</div>
+                        <p className="movie-description">{fixedOverview}</p>
+                        <Rate className="movie-rate"
+                            allowHalf
+                            defaultValue={getRating()}
+                            count={10}
+                            onChange={this.handleRateChange} />
+                    </div>
+                </li>
         )
     }
 }

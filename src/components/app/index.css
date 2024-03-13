@@ -45,10 +45,12 @@ body {
 .movie-details {
   padding-left: 20px;
   padding-top: 15px;
+  position: relative;
 }
 
 .movie-title {
   margin-top: 0;
+  font-size: 20px;
 }
 
 .movie-release-date {
@@ -65,6 +67,7 @@ body {
   margin-top: 10px;
   margin-right: 40px;
   line-height: 1.2;
+  font-size: 12px;
 }
 
 .poster-loader {
@@ -101,5 +104,104 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
 
+.movie-rating {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 4px solid black;
+  color: #000;
+  padding: 5px 10px;
+  border-radius: 50%;
+  font-size: 10px;
+  width: 5px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+}
+
+.movie-rate {
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  width: 100%;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.tab-buttons button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin: 0 10px;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.tab-buttons button::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.tab-buttons button.active {
+  color: #007bff;
+}
+
+.tab-buttons button:not(.active) {
+  color: #6c757d;
+}
+
+.tab-buttons button.active::after,
+.tab-buttons button:hover:not(.active)::after {
+  background-color: #007bff;
+}
+
+.tab-buttons button:not(.active)::after {
+  background-color: transparent;
+}
+
+.tab-buttons button:hover:not(.active) {
+  color: #007bff;
+}
+
+.error-indicator {
+  top: 40px;
+}
+
+.movie-genre {
+  display: flex;
+  align-items: center;
+  min-height: 21px;
+}
+
+.movie-genre div {
+  margin: 0;
+  margin-right: 12px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: 1px solid #d9d9d9;
+  width: fit-content;
+  padding: 3px;
 }
