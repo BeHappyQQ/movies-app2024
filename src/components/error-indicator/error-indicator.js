@@ -1,7 +1,6 @@
 import React from 'react';
 import { Alert, Space } from 'antd';
 
-
 const ErrorIndicator = () => (
   <Space
     direction="vertical"
@@ -10,7 +9,7 @@ const ErrorIndicator = () => (
     }}
   >
     <Alert
-      className='error-indicator'
+      className="error-indicator"
       message="Ошибка загрузки данных"
       description="Попробуйте обновить страницу"
       type="error"
