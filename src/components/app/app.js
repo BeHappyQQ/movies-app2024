@@ -114,11 +114,7 @@ export default class App extends Component {
             Rated
           </button>
         </div>
-        {activeTab === 'search' && (
-          <div>
-            <SearchPanel onSearch={this.fetchMovies} />
-          </div>
-        )}
+        {activeTab === 'search' && <SearchPanel onSearch={this.fetchMovies} />}
         <div>
           {loading ? (
             <Loader />

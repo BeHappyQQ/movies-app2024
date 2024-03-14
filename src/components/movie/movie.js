@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { format, parseISO } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { Rate } from 'antd';
@@ -105,4 +106,35 @@ export default class Movie extends Component {
       </li>
     );
   }
+  propTypes = {
+    title: PropTypes.string.isRequired,
+    release_date: PropTypes.string,
+    overview: PropTypes.string,
+    poster_path: PropTypes.string,
+    vote_average: PropTypes.number,
+    moviesRatings: PropTypes.object,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    genre_ids: PropTypes.arrayOf(PropTypes.number),
+    genreData: PropTypes.shape({
+      genres: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+    }).isRequired,
+    onMovieRate: PropTypes.func.isRequired,
+  };
+
+  defaultProps = {
+    title: 'N/A',
+    release_date: null,
+    overview: '',
+    poster_path: '',
+    vote_average: 0,
+    moviesRatings: {},
+    id: '',
+    genre_ids: [],
+    genreData: { genres: [] },
+  };
 }
